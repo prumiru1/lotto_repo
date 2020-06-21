@@ -61,7 +61,7 @@ while (True):
 
 		for idx, numdata in enumerate(numdata_new):
 			f_json["win_nums"].insert(0, numdata);
-		f_json_str = json.dumps(f_json)
+		f_json_str = json.dumps(f_json, indent=3)
 		# print(f_json_str)
 
 		f = open("powerball", "w")
