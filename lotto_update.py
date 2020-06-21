@@ -9,6 +9,7 @@ from sodapy import Socrata
 import json
 import time
 from datetime import datetime as dt
+import os
 
 # Unauthenticated client only works with public data sets. Note 'None'
 # in place of application token, and no username or password:
@@ -69,6 +70,10 @@ def updateLotto(lotto_name):
 		f.write(f_json_str)
 		f.close()
 
+		if len(numdata_new) > 0:
+			# os.system("bash git_lotto.sh")
+			os.system('git add -A && git commit -m "' + lotto_name + ': ' + f_json["win_nums"][0]["date"] + '" && git push')
+
 	except Exception as e:
 		print(type(e), "---", repr(e))
 
@@ -78,4 +83,7 @@ while (True):
 	updateLotto("powerball")
 	updateLotto("megamillion")
 
-	time.sleep(60*60) # 1 hour
+	# time.sleep(1) 
+	time.sleep(3*60*60) # 3 hour
+
+
