@@ -20,10 +20,11 @@ client = Socrata("data.ny.gov", None)
 #                  userame="user@example.com",
 #                  password="AFakePassword")
 
+lotto_apiurl = {"powerball":"d6yy-54nr", "megamillion": "5xaw-6ayf"}
 
-while (True):
+def updateLotto(lotto_name):
 	try:
-		f = open("powerball", "r")
+		f = open(lotto_name, "r")
 		f_json = json.loads(f.read())
 		f.close()
 		# print(type(f_json), f_json["win_nums"][0]["date"])
@@ -31,7 +32,7 @@ while (True):
 
 		# First 2000 results, returned as JSON from API / converted to Python list of
 		# dictionaries by sodapy.
-		results = client.get("d6yy-54nr", limit=20)
+		results = client.get(lotto_apiurl[lotto_name], limit=20)
 
 		# Convert to pandas DataFrame
 		results_df = pd.DataFrame.from_records(results)
@@ -57,18 +58,24 @@ while (True):
 				# print(date_proc, row['multiplier'], row['winning_numbers'])
 			else:
 				break
-		print("Added data: ", numdata_new, "\n")
+		print(lotto_name, "| added data: ", numdata_new, "\n")
 
 		for idx, numdata in enumerate(numdata_new):
 			f_json["win_nums"].insert(0, numdata);
 		f_json_str = json.dumps(f_json, indent=3)
 		# print(f_json_str)
 
-		f = open("powerball", "w")
+		f = open(lotto_name, "w")
 		f.write(f_json_str)
 		f.close()
 
 	except Exception as e:
 		print(type(e), "---", repr(e))
+
+#-----------------------------------
+
+while (True):
+	updateLotto("powerball")
+	updateLotto("megamillion")
 
 	time.sleep(60*60) # 1 hour
