@@ -55,24 +55,31 @@ def updateLotto(lotto_name):
 			date_proc = dt.strptime(date_proc[:10], "%Y-%m-%d")	
 
 			if (f_lastest_date < date_proc):
-				numdata_new.insert(0, {"date": date_proc.strftime("%Y/%m/%d"), "nums": row['winning_numbers']});
-				# print(date_proc, row['multiplier'], row['winning_numbers'])
+				if (lotto_name == "megamillion"):
+					numdata_new.insert(0, {"date": date_proc.strftime("%Y/%m/%d"), "nums": row['winning_numbers'] + " " + row['mega_ball']});
+					# print(date_proc, row['multiplier'], row['winning_numbers'], row['mega_ball'])
+				else:
+					numdata_new.insert(0, {"date": date_proc.strftime("%Y/%m/%d"), "nums": row['winning_numbers']});
+					# print(date_proc, row['multiplier'], row['winning_numbers'])
 			else:
 				break
-		print(lotto_name, "| added data: ", numdata_new, "\n")
 
-		for idx, numdata in enumerate(numdata_new):
-			f_json["win_nums"].insert(0, numdata);
-		f_json_str = json.dumps(f_json, indent=3)
-		# print(f_json_str)
+		if (len(numdata_new) > 0):
+			print(lotto_name, "| added data: ", numdata_new, "\n")
 
-		f = open(lotto_name, "w")
-		f.write(f_json_str)
-		f.close()
+			for idx, numdata in enumerate(numdata_new):
+				f_json["win_nums"].insert(0, numdata);
+			f_json_str = json.dumps(f_json, indent=3)
 
-		if len(numdata_new) > 0:
-			# os.system("bash git_lotto.sh")
-			os.system('git add -A && git commit -m "' + lotto_name + ': ' + f_json["win_nums"][0]["date"] + '" && git push')
+			f = open(lotto_name, "w")
+			f.write(f_json_str)
+			f.close()
+
+			if len(numdata_new) > 0:
+				# os.system("bash git_lotto.sh")
+				os.system('git add -A && git commit -m "' + lotto_name + ': ' + f_json["win_nums"][0]["date"] + '" && git push')
+		else:
+			print(lotto_name, "| No change\n")
 
 	except Exception as e:
 		print(type(e), "---", repr(e))
