@@ -11,15 +11,6 @@ import time
 from datetime import datetime as dt
 import os
 
-# Unauthenticated client only works with public data sets. Note 'None'
-# in place of application token, and no username or password:
-client = Socrata("data.ny.gov", None)
-
-# Example authenticated client (needed for non-public datasets):
-# client = Socrata(data.ny.gov,
-#                  MyAppToken,
-#                  userame="user@example.com",
-#                  password="AFakePassword")
 
 lotto_apiurl = {"powerball":"d6yy-54nr", "megamillion": "5xaw-6ayf"}
 
@@ -30,6 +21,16 @@ def updateLotto(lotto_name):
 		f.close()
 		# print(type(f_json), f_json["win_nums"][0]["date"])
 		#print(type(f.read()))
+
+		# Unauthenticated client only works with public data sets. Note 'None'
+		# in place of application token, and no username or password:
+		client = Socrata("data.ny.gov", None)
+
+		# Example authenticated client (needed for non-public datasets):
+		# client = Socrata(data.ny.gov,
+		#                  MyAppToken,
+		#                  userame="user@example.com",
+		#                  password="AFakePassword")
 
 		# First 2000 results, returned as JSON from API / converted to Python list of
 		# dictionaries by sodapy.
