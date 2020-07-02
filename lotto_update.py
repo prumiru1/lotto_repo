@@ -66,7 +66,7 @@ def updateLotto(lotto_name):
 				break
 
 		if (len(numdata_new) > 0):
-			print(lotto_name, "| added data: ", numdata_new, "\n")
+			print(lotto_name, dt.today(), "| added data: ", numdata_new, "\n")
 
 			for idx, numdata in enumerate(numdata_new):
 				f_json["win_nums"].insert(0, numdata);
@@ -80,7 +80,7 @@ def updateLotto(lotto_name):
 				# os.system("bash git_lotto.sh")
 				os.system('git add -A && git commit -m "' + lotto_name + ': ' + f_json["win_nums"][0]["date"] + '" && git push')
 		else:
-			print(lotto_name, "| No change\n")
+			print(lotto_name, dt.today(), "| No change\n")
 
 	except Exception as e:
 		print(type(e), "---", repr(e))
