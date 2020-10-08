@@ -92,6 +92,6 @@ while (True):
 	updateLotto("megamillion")
 
 	# time.sleep(1) 
-	time.sleep(3*60*60) # 3 hour
+	time.sleep(6*60*60) # 6 hour
 
 
