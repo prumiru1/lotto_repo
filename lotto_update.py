@@ -48,10 +48,12 @@ def updateLotto(lotto_name):
 		# lotto_json = json.dumps({"name": "Power Ball", "win_nums": lotto_data})
 		# print(lotto_json)
 
+		print(lotto_name)
 		numdata_new = []
 		# f_json["win_nums"][0]["date"] = "2020/06/03"
 		for index, row in results_df.iterrows():
-			date_proc = row['draw_date']		
+			date_proc = row['draw_date']	
+			print(date_proc)	
 			f_lastest_date = dt.strptime(f_json["win_nums"][0]["date"], "%Y/%m/%d")
 			date_proc = dt.strptime(date_proc[:10], "%Y-%m-%d")	
 
@@ -80,7 +82,7 @@ def updateLotto(lotto_name):
 				# os.system("bash git_lotto.sh")
 				os.system('git add -A && git commit -m "' + lotto_name + ': ' + f_json["win_nums"][0]["date"] + '" && git push')
 		else:
-			print(lotto_name, dt.today(), "| No change\n")
+			print(dt.today(), "| No change\n")
 
 	except Exception as e:
 		print(type(e), "---", repr(e))
