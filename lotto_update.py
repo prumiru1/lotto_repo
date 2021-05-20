@@ -38,7 +38,7 @@ def updateLotto(lotto_name):
 
 		# Convert to pandas DataFrame
 		results_df = pd.DataFrame.from_records(results)
-		# print(type(results_df))
+		# print(type(results_df), results_df)
 
 		# lotto_data = []
 		# for index, row in results_df.iterrows():
@@ -52,8 +52,8 @@ def updateLotto(lotto_name):
 		numdata_new = []
 		# f_json["win_nums"][0]["date"] = "2020/06/03"
 		for index, row in results_df.iterrows():
-			date_proc = row['draw_date']	
-			print(date_proc)	
+			date_proc = row['draw_date']
+
 			f_lastest_date = dt.strptime(f_json["win_nums"][0]["date"], "%Y/%m/%d")
 			date_proc = dt.strptime(date_proc[:10], "%Y-%m-%d")	
 
